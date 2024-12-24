@@ -51,7 +51,7 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  return (value1 * value2) / 2;
+  return value1 / 2 + value2 / 2;
 }
 
 /**
@@ -203,11 +203,11 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-  if (n % 2 === 0 || n % 3 === 0) {
-    return false;
-  }
-  if (n <= 3) {
-    return true;
+  if (n <= 1) return false;
+  if (n <= 3) return true;
+  if (n % 2 === 0 || n % 3 === 0) return false;
+  for (let i = 5; i * i <= n; i += 6) {
+    if (n % i === 0 || n % (i + 2) === 0) return false;
   }
   return true;
 }
@@ -278,7 +278,7 @@ function getFibonacciNumber(index) {
  */
 function getSumToN(n) {
   let sum = 0;
-  for (let i = 0; i <= n; i++) {
+  for (let i = 0; i <= n; i += 1) {
     sum += i;
   }
   return sum;
@@ -296,7 +296,10 @@ function getSumToN(n) {
  *   5   => 5  // 5
  */
 function getSumOfDigits(num) {
-  return (num % 100) + (num % 10) + (num % 1);
+  return num
+    .toString()
+    .split('')
+    .reduce((sum, digit) => sum + parseInt(digit, 10), 0);
 }
 
 /**
@@ -311,7 +314,7 @@ function getSumOfDigits(num) {
  *   15  => false
  */
 function isPowerOfTwo(number) {
-  if (number <= 0) return false; 
+  if (number <= 0) return false;
   return Math.log2(number) % 1 === 0;
 }
 
@@ -449,7 +452,8 @@ function isInteger(number) {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  return Number.isNaN(parseFloat(str)) ? NaN : parseFloat(str);
+  const result = Number.parseFloat(str);
+  return Number.isNaN(result) ? NaN : result;
 }
 
 /**
@@ -557,7 +561,8 @@ function getIntegerPartNumber(number) {
  * 0.1, 0.2, 0.3 => 0.6
  */
 function getSumOfNumbers(x1, x2, x3) {
-  return x1 + x2 + x3;
+  const sum = x1 + x2 + x3;
+  return parseFloat(sum.toFixed(10));
 }
 
 /**
@@ -589,9 +594,7 @@ function getMaxNumber(firstNumber, secondNumber) {
  * -1, 1 => -1 | 0 | 1
  */
 function getRandomInteger(min, max) {
-  const min1 = Math.ceil(min);
-  const max1 = Math.floor(max);
-  return Math.floor(Math.random() * (max1 - min1 + 1));
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -605,7 +608,7 @@ function getRandomInteger(min, max) {
  * 3, 4 => 5
  */
 function getHypotenuse(a, b) {
-  return Math.sqrt(a * a + b * b);
+  return Math.hypot(a, b);
 }
 
 /**
@@ -622,7 +625,8 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  return Math.floor((number + 1) / 2);
+  if (number < 0) return 0;
+  return Math.floor(number / 2) + (number % 2 === 1 ? 1 : 0);
 }
 
 module.exports = {
