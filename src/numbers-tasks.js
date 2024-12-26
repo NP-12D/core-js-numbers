@@ -471,7 +471,7 @@ function getFloatOnString(str) {
  * '10', 8              => 8
  */
 function getIntegerOnString(str, base) {
-  const result = parseInt(str, base);
+  const result = Number.parseInt(str, base);
   return Number.isNaN(result) ? NaN : result;
 }
 
@@ -545,7 +545,7 @@ function roundToNearestInteger(number) {
  * -5.5 => -5
  */
 function getIntegerPartNumber(number) {
-  return number < 0 ? Math.ceil(number) : Math.floor(number);
+  return Math.trunc(number);
 }
 
 /**
@@ -578,7 +578,7 @@ function getSumOfNumbers(x1, x2, x3) {
  * 0, 5   => 5
  */
 function getMaxNumber(firstNumber, secondNumber) {
-  return firstNumber > secondNumber ? firstNumber : secondNumber;
+  return Math.max(firstNumber, secondNumber);
 }
 
 /**
@@ -625,8 +625,16 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  if (number < 0) return 0;
-  return Math.floor(number / 2) + (number % 2 === 1 ? 1 : 0);
+  let count = 0;
+  if (number === 0) return 0;
+  const start = Math.min(0, number);
+  const end = Math.max(0, number);
+  for (let i = start; i <= end; i += 1) {
+    if (i % 2 !== 0) {
+      count += 1;
+    }
+  }
+  return count;
 }
 
 module.exports = {
